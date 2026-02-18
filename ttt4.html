@@ -1,5 +1,22 @@
 <head>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:beige;
+            margin: 0;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 0 10px 0;
+            background-color:darkcyan;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
         .tttgrid {
 			margin: 5% auto;
 
@@ -48,18 +65,16 @@
     </style>
 </head>
 <body>
-    <h1>
-        Welcome to TicTacToe
-    </h1>
-    <button id="startButton" style="color:springgreen">Start Game</button>
-    <div id = "turnDisplay">
-        X's Turn
+    <div class="header">
+        <h1>Welcome to Tic Tac Toe</h1>
+        <div id="turnDisplay" style = "background-color:powderblue">X's Turn</div>
+        <button id="startButton" style="background-color: springgreen; display: none; margin: auto">Start New Game</button>
     </div>
     <div class = "tttgrid">
         <script>
             // initializing key variables
             turn = Math.random();
-            start = false;
+            start = true;
             const NUM_SQUARES = 9;
 
             ids = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -144,6 +159,10 @@
                     start = false;
                     document.getElementById("winDisplay").innerHTML ="STALEMATE!";
                 }
+
+                if (!start) {
+                    document.getElementById("startButton").style.display = "block";
+                }
             }
 
             // initialize board
@@ -162,6 +181,7 @@
                 let moves = [];
                 start = true;
                 document.getElementById("winDisplay").innerHTML = "No winner yet";
+                document.getElementById("startButton").style.display = "none";
             }
 
             // allows start button to call startGame
@@ -169,7 +189,8 @@
         </script>
     </div>
 
-    <div id="winDisplay">
+    <div id="winDisplay" style="background-color:powderblue">
         No winner yet
     </div>
+
 </body>
