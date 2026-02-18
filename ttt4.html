@@ -58,10 +58,14 @@
     </div>
     <div class = "tttgrid">
         <script>
+            // initializing key variables
             turn = Math.random();
             start = false;
-            NUM_SQUARES = 9;
+            const NUM_SQUARES = 9;
 
+            ids = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+            // randomizing who begins first
             if (turn < .5) {
                 turn = 0
                 $("#turnDisplay").html("X's Turn");
@@ -71,6 +75,7 @@
             }
 
             function squareClick(index) {
+                // assigning value to box
                 if (document.getElementById("sq" + index).innerHTML != "X" && document.getElementById("sq" + index).innerHTML != "O") {
                     if (turn == 0 && start) {
                         $("#sq" + index).html("X");
@@ -82,7 +87,63 @@
                         turn = 0;
                     }
                 }
-                alert("You clicked square " + index);
+
+                // updating array representing state of the game
+                moves = [];
+
+                ids.forEach(id => {
+                    if (document.getElementById("sq" + id).innerHTML == "X") {
+                        moves.push("X");
+                    } else if (document.getElementById("sq" + id).innerHTML == "O") {
+                        moves.push("O");
+                    } else {
+                        moves.push("-");
+                    }
+                });
+
+                console.log(moves);
+
+                // building possible win condition arrays
+                winConditions = [];
+
+                // 3 rows
+                winConditions.push(moves[0] + moves[1] + moves[2]); // top row
+                winConditions.push(moves[3] + moves[4] + moves[5]); // middle row
+                winConditions.push(moves[6] + moves[7] + moves[8]); // bottom row
+
+                // 3 columns
+                winConditions.push(moves[0] + moves[3] + moves[6]); // left column
+                winConditions.push(moves[1] + moves[4] + moves[7]); // middle column
+                winConditions.push(moves[2] + moves[5] + moves[8]); // right column
+
+                // 2 diagonals
+                winConditions.push(moves[0] + moves[4] + moves[8]); // top-left to bottom-right
+                winConditions.push(moves[2] + moves[4] + moves[6]);
+
+                win = false;
+                winConditions.forEach(str => {
+                    if (str == "XXX") {
+                        start = false;
+                        win = true;
+                        $("#winDisplay").html("X WINS!");
+                    } else if (str == "OOO") {
+                        start = false;
+                        win = true;
+                        $("#winDisplay").html("O WINS!");
+                    }
+                })
+
+                let hasSpace = false;
+                moves.forEach(slot => {
+                    if (slot == "-") {
+                        hasSpace = true;
+                    }
+                })
+
+                if (!hasSpace & !win) {
+                    start = false;
+                    $("#winDisplay").html("STALEMATE!");
+                }
             }
 
             for (i=0; i<NUM_SQUARES; i++)
@@ -96,7 +157,9 @@
                 {
                     $("#sq" + i).html("");
                 }
+                let moves = [];
                 start = true;
+                $("#winDisplay").html("No winner yet");
             }
 
             $("#startButton").click(startGame);
