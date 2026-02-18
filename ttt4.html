@@ -1,5 +1,4 @@
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .tttgrid {
 			margin: 5% auto;
@@ -12,7 +11,7 @@
   		    gap: 5px;  
 		}
         .square {
-            font-size: clamp(1.25rem, 4vw, 2rem);
+            font-size: clamp(2.5rem, 8vw, 5.5rem);
 
             border-radius: 5px;
             border: 2px solid;
@@ -68,22 +67,22 @@
             // randomizing who begins first
             if (turn < .5) {
                 turn = 0
-                $("#turnDisplay").html("X's Turn");
+                document.getElementById("turnDisplay").innerHTML = "X's Turn";
             } else {
                 turn = 1;
-                $("#turnDisplay").html("O's Turn");
+                document.getElementById("turnDisplay").innerHTML = "O's Turn";
             }
 
             function squareClick(index) {
                 // assigning value to box
                 if (document.getElementById("sq" + index).innerHTML != "X" && document.getElementById("sq" + index).innerHTML != "O") {
                     if (turn == 0 && start) {
-                        $("#sq" + index).html("X");
-                        $("#turnDisplay").html("O's Turn");
+                        document.getElementById("sq" + index).innerHTML = "X";
+                        document.getElementById("turnDisplay").innerHTML = "O's Turn";
                         turn = 1;
                     } else if (turn == 1 && start) {
-                        $("#sq" + index).html("O");
-                        $("#turnDisplay").html("X's Turn");
+                        document.getElementById("sq" + index).innerHTML = "O";
+                        document.getElementById("turnDisplay").innerHTML = "X's Turn";
                         turn = 0;
                     }
                 }
@@ -100,8 +99,6 @@
                         moves.push("-");
                     }
                 });
-
-                console.log(moves);
 
                 // building possible win condition arrays
                 winConditions = [];
@@ -120,19 +117,21 @@
                 winConditions.push(moves[0] + moves[4] + moves[8]); // top-left to bottom-right
                 winConditions.push(moves[2] + moves[4] + moves[6]);
 
+                // Checks if any condition's state implies a win
                 win = false;
                 winConditions.forEach(str => {
                     if (str == "XXX") {
                         start = false;
                         win = true;
-                        $("#winDisplay").html("X WINS!");
+                        document.getElementById("winDisplay").innerHTML = "X WINS!";
                     } else if (str == "OOO") {
                         start = false;
                         win = true;
-                        $("#winDisplay").html("O WINS!");
+                        document.getElementById("winDisplay").innerHTML = "O WINS!";
                     }
                 })
 
+                // ensures further moves are possible
                 let hasSpace = false;
                 moves.forEach(slot => {
                     if (slot == "-") {
@@ -140,29 +139,33 @@
                     }
                 })
 
-                if (!hasSpace & !win) {
+                // calls stalemate if no further moves are possible and no one has one
+                if (!hasSpace && !win) {
                     start = false;
-                    $("#winDisplay").html("STALEMATE!");
+                    document.getElementById("winDisplay").innerHTML ="STALEMATE!";
                 }
             }
 
+            // initialize board
             for (i=0; i<NUM_SQUARES; i++)
             {
                 id = "sq"+i;
                 document.write( "<div class='square' id='" + id + "' onclick=' squareClick(" + i +")'></div>");
             }
 
+            // restart and allow players to make moves
             function startGame() {
                 for (i=0; i<NUM_SQUARES; i++)
                 {
-                    $("#sq" + i).html("");
+                    document.getElementById("sq" + i).innerHTML = "";
                 }
                 let moves = [];
                 start = true;
-                $("#winDisplay").html("No winner yet");
+                document.getElementById("winDisplay").innerHTML = "No winner yet";
             }
 
-            $("#startButton").click(startGame);
+            // allows start button to call startGame
+            document.getElementById("startButton").addEventListener("click", startGame);
         </script>
     </div>
 
