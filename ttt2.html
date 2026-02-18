@@ -1,0 +1,74 @@
+<head>
+    <style>
+        .tttgrid {
+			margin: 5% auto;
+
+			display: grid;
+            grid-template-columns: repeat(3, min(150px, 15vw));
+			width: min(45vw, 450px);
+
+  		    align-items: center;      /* vertical alignment */
+  		    gap: 5px;  
+		}
+        .square {
+            font-size: clamp(1.25rem, 4vw, 2rem);
+
+            border-radius: 5px;
+            border: 2px solid;
+            border-color:black;
+
+			width: min(15vw, 150px);
+            aspect-ratio: 1/1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+		}
+
+        .square:hover {
+            background-color:greenyellow;
+        }
+
+        #winDisplay {
+            border: 2px solid black;
+            width: min(60vw, 600px);
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+        #turnDisplay {
+            border: 2px solid black;
+            width: min(60vw, 600px);
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        Welcome to TicTacToe
+    </h1>
+    <div id = "turnDisplay">
+        X's Turn
+    </div>
+    <div class = "tttgrid">
+        <script>
+            const NUM_SQUARES = 9;
+            for (i=0; i<NUM_SQUARES; i++)
+            {
+                id = "sq"+i;
+                document.write( "<div class='square' id='" + id + "'></div>" );
+            }
+
+            document.getElementById("sq2").innerHTML = "X";
+            document.getElementById("sq3").innerHTML = "O";
+        </script>
+    </div>
+
+    <div id="winDisplay">
+        No winner yet
+    </div>
+</body>

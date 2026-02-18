@@ -1,0 +1,108 @@
+<head>
+    <style>
+        .tttgrid {
+			margin: 5% auto;
+
+			display: grid;
+            grid-template-columns: repeat(3, min(100px, 10vw));
+			width: min(30vw, 300px);
+
+  		    align-items: center;      /* vertical alignment */
+  		    gap: 5px;  
+		}
+        .square {
+            font-size: clamp(1.25rem, 4vw, 2rem);
+
+            border-radius: 5px;
+            border: 2px solid;
+            border-color:black;
+
+			width: min(10vw, 100px);
+            aspect-ratio: 1/1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+		}
+
+        .square:hover {
+            background-color:greenyellow;
+        }
+
+        #winDisplay {
+            border: 2px solid black;
+            width: min(60vw, 600px);
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+        #turnDisplay {
+            border: 2px solid black;
+            width: min(60vw, 600px);
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        Welcome to TicTacToe
+    </h1>
+    <button id="startButton">Start Game</button>
+    <div id = "turnDisplay">
+        X's Turn
+    </div>
+    <div class = "tttgrid">
+        <script>
+            turn = Math.random();
+            start = false;
+            NUM_SQUARES = 9;
+
+            if (turn < .5) {
+                turn = 0
+                document.getElementById("turnDisplay").innerHTML = "X's Turn";
+            } else {
+                turn = 1;
+                document.getElementById("turnDisplay").innerHTML = "O's Turn";
+            }
+
+            function squareClick(index) {
+                if (document.getElementById("sq" + index).innerHTML != "X" && document.getElementById("sq" + index).innerHTML != "O") {
+                    if (turn == 0 && start) {
+                        document.getElementById("sq" + index).innerHTML = "X";
+                        document.getElementById("turnDisplay").innerHTML = "O's Turn";
+                        turn = 1;
+                    } else if (turn == 1 && start) {
+                        document.getElementById("sq" + index).innerHTML = "O";
+                        document.getElementById("turnDisplay").innerHTML = "X's Turn";
+                        turn = 0;
+                    }
+                    alert("You clicked square " + index);
+                }
+            }
+
+            for (i=0; i<NUM_SQUARES; i++)
+            {
+                id = "sq"+i;
+                document.write( "<div class='square' id='" + id + "' onclick=' squareClick(" + i +")'></div>");
+            }
+
+            function startGame() {
+                for (i=0; i<NUM_SQUARES; i++)
+                {
+                    document.getElementById("sq" + i).innerHTML = "";
+                }
+                start = true;
+            }
+
+            document.getElementById("startButton").addEventListener("click", startGame);
+        </script>
+    </div>
+
+    <div id="winDisplay">
+        No winner yet
+    </div>
+</body>
